@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Wasting Time on Manual Order Cancellations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Logo */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            z-index: 100;
+        }
+        
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #00ff88;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            color: white;
+            padding: 120px 0 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        /* Animated data flow lines */
+        .data-flow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            opacity: 0.15;
+        }
+
+        .flow-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            animation: flowMove 8s linear infinite;
+        }
+
+        .flow-line:nth-child(1) { top: 20%; width: 300px; animation-delay: 0s; }
+        .flow-line:nth-child(2) { top: 40%; width: 250px; animation-delay: 2s; }
+        .flow-line:nth-child(3) { top: 60%; width: 280px; animation-delay: 4s; }
+        .flow-line:nth-child(4) { top: 80%; width: 320px; animation-delay: 6s; }
+
+        @keyframes flowMove {
+            0% { left: -300px; }
+            100% { left: 100%; }
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero .target {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            color: #a0a0a0;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #000000;
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Side navigation */
+        .side-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-dot {
+            width: 6px;
+            height: 6px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot:hover {
+            border-color: rgba(0, 255, 136, 0.6);
+            transform: scale(1.3);
+        }
+
+        .nav-dot.active {
+            background: #00ff88;
+            border-color: #00ff88;
+            width: 8px;
+            height: 8px;
+        }
+
+        .nav-dot::after {
+            content: attr(data-label);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            color: #00ff88;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .nav-dot:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .side-nav {
+                display: none;
+            }
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 80px 0;
+            background: #0a0a0a;
+        }
+        
+        .problem h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #ffffff;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .problem-card {
+            background: #151515;
+            padding: 35px;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #ff4444;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .problem-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.1);
+        }
+        
+        .problem-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ff4444;
+        }
+        
+        .problem-card p {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 80px 0;
+            background: #000000;
+            position: relative;
+        }
+        
+        .solution h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #ffffff;
+        }
+        
+        .solution-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .solution-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .solution-visual {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #151515 100%);
+            padding: 50px;
+            border-radius: 12px;
+            color: white;
+            border: 1px solid #00ff88;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated workflow steps */
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 25px;
+            background: #2a2a2a;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .workflow-step:last-child .step-number::after {
+            display: none;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content p {
+            margin: 0;
+            line-height: 1.5;
+            color: #e0e0e0;
+        }
+        
+        .solution-visual h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #00ff88;
+        }
+        
+        .benefit {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .benefit:hover {
+            border-left-color: #00ff88;
+        }
+        
+        .benefit h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .benefit p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #b0b0b0;
+        }
+        
+        /* Stats Section */
+        .stats {
+            background: #0a0a0a;
+            color: white;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: backgroundPulse 20s linear infinite;
+            top: -50%;
+            left: -50%;
+        }
+
+        @keyframes backgroundPulse {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat {
+            position: relative;
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+        }
+
+        .stat h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #00ff88;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(0, 255, 136, 0.8); }
+        }
+        
+        .stat p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            color: #b0b0b0;
+        }
+        
+        /* CTA Section */
+        .final-cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        /* Animated pulse ring */
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 50%;
+            animation: pulseRing 3s ease-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .final-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            color: #b0b0b0;
+        }
+        
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #000000;
+        }
+
+        .cta-button.secondary:hover {
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content {
+            background: #0a0a0a;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.2);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #2a2a2a;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #808080;
+            cursor: pointer;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #00ff88;
+        }
+
+        .modal-header {
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .modal-header p {
+            color: #b0b0b0;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #2a2a2a;
+            background: #151515;
+            color: #ffffff;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #000000;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        .success-message h3 {
+            color: #00ff88;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .solution-content {
+                gap: 30px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <a href="#" class="logo-text">Tamrind Agency</a>
+    </div>
+
+    <!-- Side Navigation -->
+    <div class="side-nav">
+        <div class="nav-dot active" data-label="Home" onclick="document.querySelector('.hero').scrollIntoView({behavior: 'smooth'})"></div>
+        <div class="nav-dot" data-label="Problem" onclick="document.querySelector('.problem').scrollIntoView({behavior: 'smooth'})"></div>
+        <div class="nav-dot" data-label="Solution" onclick="document.querySelector('.solution').scrollIntoView({behavior: 'smooth'})"></div>
+        <div class="nav-dot" data-label="Contact" onclick="document.querySelector('.final-cta').scrollIntoView({behavior: 'smooth'})"></div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="data-flow">
+            <div class="flow-line"></div>
+            <div class="flow-line"></div>
+            <div class="flow-line"></div>
+            <div class="flow-line"></div>
+        </div>
+        <div class="container">
+            <h1>Stop Wasting Hours on Manual Order Cancellations</h1>
+            <p class="subtitle">Your warehouse team deserves better than monitoring buyer-requested cancellations</p>
+            <p class="target">Cancel orders before they ship</p>
+            <button class="cta-button" onclick="openModal()">
+                See How It Works
+            </button>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2>You're Losing Money Every Day</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Wasted Labor Hours</h3>
+                    <p>Your team or VA manually processes every buyer-requested cancellation after orders hit the warehouse</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Hidden Costs Add Up</h3>
+                    <p>Every missed or late cancellation adds unnecessary labor and shipping expenses</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Opportunity Cost</h3>
+                    <p>Most Amazon brands don't realize this process can be fully automated</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2>Automatic Cancellation Processing</h2>
+            <div class="solution-content">
+                <div class="solution-text">
+                    <div class="benefit">
+                        <h4>⚡ Instant Processing</h4>
+                        <p>When a buyer requests cancellation, our system automatically processes it in your warehouse management system—no human needed</p>
+                    </div>
+                    <div class="benefit">
+                        <h4>💰 Save Money Immediately</h4>
+                        <p>Eliminate manual labor costs and reduce fulfillment errors. Most clients save 15-25 hours per week</p>
+                    </div>
+                    <div class="benefit">
+                        <h4>🎯 Built for Your Scale</h4>
+                        <p>Perfect for operations managing 100+ SKUs with their own warehouse infrastructure</p>
+                    </div>
+                </div>
+                <div class="solution-visual">
+                    <h3>How It Works</h3>
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <p>Buyer requests order cancellation</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <p>Our system detects it instantly</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <p>Cancellation auto-processes in your warehouse</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <p>Your team focuses on growth, not grunt work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat">
+                    <h3>⚡ Quick</h3>
+                    <p>Orders canceled automatically before they ship</p>
+                </div>
+                <div class="stat">
+                    <h3>💰 $$ Saved</h3>
+                    <p>Cut labor costs and wasted effort every month</p>
+                </div>
+                <div class="stat">
+                    <h3>🕐 24/7</h3>
+                    <p>Automatic processing, even outside business hours</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="contact">
+        <div class="pulse-ring"></div>
+        <div class="container">
+            <h2>Ready to Automate Your Cancellations?</h2>
+            <p>Join successful e-commerce brands saving thousands monthly</p>
+            <button class="cta-button secondary" onclick="openModal()">
+                Schedule a 15-Minute Demo
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            
+            <div id="formContainer">
+                <div class="modal-header">
+                    <h2>Schedule Your Demo</h2>
+                    <p>Fill out the form below and we'll get back to you within 24 hours</p>
+                </div>
+
+                <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="3d9bdc0b-479b-46bd-b0bf-fa08bee91047">
+                    <input type="hidden" name="subject" value="New Demo Request from Landing Page">
+                    <input type="hidden" name="from_name" value="Tamrind Agency Landing Page">
+
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="john@company.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company Name *</label>
+                        <input type="text" id="company" name="company" required placeholder="Your Company">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skus">How many SKUs do you manage?</label>
+                        <select id="skus" name="skus">
+                            <option value="">Select range...</option>
+                            <option value="50-100">50-100 SKUs</option>
+                            <option value="100-500">100-500 SKUs</option>
+                            <option value="500-1000">500-1,000 SKUs</option>
+                            <option value="1000+">1,000+ SKUs</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Schedule My Demo
+                    </button>
+                </form>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                <h3>✓ Thank You!</h3>
+                <p>We've received your request and will contact you within 24 hours to schedule your demo.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('contactModal');
+        const form = document.getElementById('contactForm');
+        const formContainer = document.getElementById('formContainer');
+        const successMessage = document.getElementById('successMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            setTimeout(() => {
+                formContainer.style.display = 'block';
+                successMessage.classList.remove('active');
+                form.reset();
+            }, 300);
+        }
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Update nav dots on scroll
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.className;
+                }
+            });
+
+            navDots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if ((current.includes('hero') && index === 0) ||
+                    (current.includes('problem') && index === 1) ||
+                    (current.includes('solution') && index === 2) ||
+                    (current.includes('final-cta') && index === 3)) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    formContainer.style.display = 'none';
+                    successMessage.classList.add('active');
+                    
+                    setTimeout(() => {
+                        closeModal();
+                    }, 3000);
+                } else {
+                    alert('Something went wrong. Please try again or email us directly.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Schedule My Demo';
+                }
+            } catch (error) {
+                alert('Something went wrong. Please try again or email us directly.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Schedule My Demo';
+            }
+        });
+    </script>
+</body>
+</html>
